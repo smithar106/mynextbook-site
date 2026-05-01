@@ -13,8 +13,10 @@
     .links { display: flex; gap: 1.5rem; }
     .links a { color: #A78BFA; text-decoration: none; font-size: 0.95rem; }
     .links a:hover { text-decoration: underline; }
-    .badge { margin-top: 2.5rem; }
-    .badge img { height: 48px; }
+    .badges { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: center; margin-top: 2.5rem; }
+    .badges img { height: 48px; }
+    .badge-coming { display: flex; align-items: center; gap: 0.6rem; background: #1E1E2C; border: 1px solid #2E2E40; border-radius: 10px; padding: 0.6rem 1.2rem; color: #B0B0D0; font-size: 0.85rem; height: 48px; cursor: default; }
+    .badge-coming svg { opacity: 0.6; }
   </style>
 </head>
 <body>
@@ -25,10 +27,14 @@
     <a href="/privacy">Privacy Policy</a>
     <a href="/support">Support</a>
   </div>
-  <div class="badge">
+  <div class="badges">
     <a href="https://apps.apple.com/app/id6763831526">
       <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" />
     </a>
+    <div class="badge-coming">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="#B0B0D0"><path d="M3.18 23c-.06 0-.12-.01-.18-.03a.5.5 0 0 1-.32-.47V1.5a.5.5 0 0 1 .5-.5c.1 0 .2.03.28.09l17.64 10.5a.5.5 0 0 1 0 .86L3.46 22.94a.5.5 0 0 1-.28.06z"/></svg>
+      Android — Coming Soon
+    </div>
   </div>
 </body>
 </html>

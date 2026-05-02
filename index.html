@@ -3,38 +3,488 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Next Book</title>
+  <title>My Next Book — Find your next favorite book</title>
+  <meta name="description" content="The app that learns your exact taste — not the bestseller list. Powered by 14-dimension AI analysis across 100,000+ books." />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #0F0F14; color: #E8E8F8; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; }
-    .logo { font-size: 2.5rem; font-weight: 800; color: #A78BFA; margin-bottom: 0.5rem; }
-    .tagline { font-size: 1.1rem; color: #B0B0D0; margin-bottom: 2.5rem; text-align: center; max-width: 420px; }
-    .guarantee { font-size: 1.25rem; font-weight: 600; color: #fff; text-align: center; max-width: 400px; margin-bottom: 2.5rem; line-height: 1.5; }
-    .links { display: flex; gap: 1.5rem; }
-    .links a { color: #A78BFA; text-decoration: none; font-size: 0.95rem; }
-    .links a:hover { text-decoration: underline; }
-    .badges { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: center; margin-top: 2.5rem; }
-    .badges img { height: 48px; }
-    .badge-coming { display: flex; align-items: center; gap: 0.6rem; background: #1E1E2C; border: 1px solid #2E2E40; border-radius: 10px; padding: 0.6rem 1.2rem; color: #B0B0D0; font-size: 0.85rem; height: 48px; cursor: default; }
-    .badge-coming svg { opacity: 0.6; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:        #08080F;
+      --surface:   #111120;
+      --surface2:  #18182A;
+      --border:    #2A2A42;
+      --primary:   #C4B5FD;
+      --primary2:  #A78BFA;
+      --primary3:  #7C3AED;
+      --text:      #FFFFFF;
+      --text2:     #E8E8FF;
+      --text3:     #B8B8D8;
+      --text4:     #8888AA;
+      --success:   #4ADE80;
+      --gold:      #FCD34D;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2rem;
+      background: rgba(8,8,15,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(196,181,253,0.08);
+    }
+    .nav-logo { font-size: 1.15rem; font-weight: 800; color: var(--primary); letter-spacing: -0.3px; }
+    .nav-cta {
+      background: var(--primary2); color: #0F0F14;
+      padding: 0.5rem 1.25rem; border-radius: 999px;
+      font-size: 0.875rem; font-weight: 700; text-decoration: none;
+      transition: opacity 0.15s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 7rem 1.5rem 5rem;
+      position: relative;
+    }
+    .hero-orb {
+      position: absolute; top: 10%; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(124,58,237,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(196,181,253,0.1);
+      border: 1px solid rgba(196,181,253,0.25);
+      border-radius: 999px;
+      padding: 0.4rem 1rem;
+      font-size: 0.8rem; font-weight: 700; color: var(--primary);
+      letter-spacing: 0.4px; text-transform: uppercase;
+      margin-bottom: 1.75rem;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      color: var(--text);
+      max-width: 780px;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 span { color: var(--primary); }
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: var(--text3);
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+    }
+    .hero-guarantee {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(196,181,253,0.07);
+      border: 1px solid rgba(196,181,253,0.18);
+      border-radius: 999px;
+      padding: 0.55rem 1.25rem;
+      font-size: 0.875rem; font-weight: 600; color: var(--text2);
+      margin-bottom: 2.5rem;
+    }
+    .hero-guarantee span { color: var(--primary); }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-bottom: 3rem; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--primary2); color: #0A0A14;
+      padding: 0.85rem 2rem; border-radius: 999px;
+      font-size: 1rem; font-weight: 800; text-decoration: none;
+      box-shadow: 0 0 32px rgba(167,139,250,0.35);
+      transition: box-shadow 0.2s, opacity 0.15s;
+    }
+    .btn-primary:hover { box-shadow: 0 0 48px rgba(167,139,250,0.5); opacity: 0.92; }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: transparent; color: var(--text2);
+      padding: 0.85rem 2rem; border-radius: 999px;
+      font-size: 1rem; font-weight: 700; text-decoration: none;
+      border: 1.5px solid var(--border);
+      transition: border-color 0.15s;
+    }
+    .btn-secondary:hover { border-color: var(--primary2); }
+    .hero-note { font-size: 0.8rem; color: var(--text4); }
+    .hero-note span { color: var(--success); font-weight: 700; }
+
+    /* ── STATS STRIP ── */
+    .stats {
+      display: flex; justify-content: center; gap: 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      padding: 2rem 1.5rem;
+      flex-wrap: wrap;
+    }
+    .stat-item {
+      flex: 1; min-width: 140px; max-width: 220px;
+      text-align: center; padding: 0.5rem 1.5rem;
+      border-right: 1px solid var(--border);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num { font-size: 2rem; font-weight: 800; color: var(--primary); letter-spacing: -0.5px; }
+    .stat-label { font-size: 0.8rem; color: var(--text4); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 1.5rem; max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.75rem; font-weight: 800; color: var(--primary);
+      text-transform: uppercase; letter-spacing: 1.5px;
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      font-weight: 800; letter-spacing: -0.5px;
+      color: var(--text); margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .section-sub {
+      font-size: 1.05rem; color: var(--text3); max-width: 540px; line-height: 1.7;
+      margin-bottom: 3.5rem;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+    .step-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      position: relative;
+    }
+    .step-num {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(196,181,253,0.12);
+      border: 1px solid rgba(196,181,253,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 800; color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    .step-title { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+    .step-desc { font-size: 0.875rem; color: var(--text3); line-height: 1.6; }
+
+    /* ── FEATURES ── */
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      display: flex; gap: 1rem; align-items: flex-start;
+      transition: border-color 0.2s;
+    }
+    .feature-card:hover { border-color: rgba(196,181,253,0.3); }
+    .feature-icon {
+      width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0;
+      background: rgba(196,181,253,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.25rem;
+    }
+    .feature-title { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 0.35rem; }
+    .feature-desc { font-size: 0.825rem; color: var(--text3); line-height: 1.55; }
+
+    /* ── GUARANTEE ── */
+    .guarantee-block {
+      background: linear-gradient(135deg, rgba(124,58,237,0.15) 0%, rgba(196,181,253,0.06) 100%);
+      border: 1px solid rgba(196,181,253,0.2);
+      border-radius: 24px;
+      padding: 3.5rem;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .guarantee-icon { font-size: 3rem; margin-bottom: 1.25rem; }
+    .guarantee-block h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; color: var(--text); margin-bottom: 1rem; letter-spacing: -0.3px; }
+    .guarantee-block p { font-size: 1rem; color: var(--text3); line-height: 1.7; margin-bottom: 1.5rem; }
+    .guarantee-block a { font-size: 0.85rem; color: var(--primary); }
+
+    /* ── PRICING ── */
+    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; max-width: 700px; margin: 0 auto; }
+    .price-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      position: relative;
+    }
+    .price-card.featured {
+      border-color: var(--primary2);
+      background: linear-gradient(160deg, rgba(124,58,237,0.12) 0%, var(--surface) 60%);
+    }
+    .price-badge {
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: var(--primary2); color: #0A0A14;
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 0.5px;
+      padding: 0.3rem 0.85rem; border-radius: 999px;
+      text-transform: uppercase;
+    }
+    .price-label { font-size: 0.75rem; font-weight: 700; color: var(--text4); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 0.75rem; }
+    .price-amount { font-size: 2.75rem; font-weight: 800; color: var(--text); letter-spacing: -1px; line-height: 1; }
+    .price-amount span { font-size: 1rem; font-weight: 500; color: var(--text3); }
+    .price-sub { font-size: 0.8rem; color: var(--text4); margin-top: 0.25rem; margin-bottom: 1.5rem; }
+    .price-features { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.75rem; }
+    .price-features li { font-size: 0.875rem; color: var(--text2); display: flex; align-items: center; gap: 0.5rem; }
+    .price-features li::before { content: '✦'; color: var(--primary); font-size: 0.7rem; flex-shrink: 0; }
+    .price-cta {
+      display: block; text-align: center; text-decoration: none;
+      background: var(--primary2); color: #0A0A14;
+      padding: 0.8rem; border-radius: 999px;
+      font-size: 0.9rem; font-weight: 800;
+      transition: opacity 0.15s;
+    }
+    .price-cta:hover { opacity: 0.85; }
+    .price-cta.secondary {
+      background: transparent; color: var(--text2);
+      border: 1.5px solid var(--border);
+    }
+    .price-cta.secondary:hover { border-color: var(--primary2); }
+    .pricing-note { text-align: center; font-size: 0.8rem; color: var(--text4); margin-top: 1.5rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 1.5rem;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 1rem; text-align: center;
+    }
+    .footer-logo { font-size: 1rem; font-weight: 800; color: var(--primary); }
+    .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; }
+    .footer-links a { font-size: 0.85rem; color: var(--text4); text-decoration: none; transition: color 0.15s; }
+    .footer-links a:hover { color: var(--primary); }
+    .footer-copy { font-size: 0.75rem; color: var(--text4); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      nav { padding: 0.85rem 1.25rem; }
+      .hero { padding: 6rem 1.25rem 4rem; }
+      .guarantee-block { padding: 2.5rem 1.5rem; }
+      .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .stat-item:last-child { border-bottom: none; }
+      section { padding: 4rem 1.25rem; }
+    }
   </style>
 </head>
 <body>
-  <div class="logo">📖 My Next Book</div>
-  <p class="tagline">Find your next favorite book — based on your taste, not just your genre.</p>
-  <p class="guarantee">We guarantee the next book you read will be one you love.</p>
-  <div class="links">
-    <a href="/privacy">Privacy Policy</a>
-    <a href="/support">Support</a>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">📖 My Next Book</div>
+  <a href="https://apps.apple.com/app/id6763831526" class="nav-cta">Download Free</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-orb"></div>
+
+  <div class="hero-badge">✦ AI-Powered Book Discovery</div>
+
+  <h1>Your feed learns<br><span>your exact taste.</span></h1>
+
+  <p class="hero-sub">
+    Every book you save, rate, or skip trains a personal AI — so the next recommendation is always more you. Not the bestseller list. Yours.
+  </p>
+
+  <div class="hero-guarantee">
+    <span>✦</span> We guarantee your next read will be one you love — or your money back.
   </div>
-  <div class="badges">
-    <a href="https://apps.apple.com/app/id6763831526">
-      <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" />
+
+  <div class="hero-ctas">
+    <a href="https://apps.apple.com/app/id6763831526" class="btn-primary">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      Download on iOS
     </a>
-    <div class="badge-coming">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="#B0B0D0"><path d="M3.18 23c-.06 0-.12-.01-.18-.03a.5.5 0 0 1-.32-.47V1.5a.5.5 0 0 1 .5-.5c.1 0 .2.03.28.09l17.64 10.5a.5.5 0 0 1 0 .86L3.46 22.94a.5.5 0 0 1-.28.06z"/></svg>
-      Android — Coming Soon
+    <a href="#how-it-works" class="btn-secondary">See how it works →</a>
+  </div>
+
+  <p class="hero-note"><span>Free to start</span> · 7-day Premium trial included</p>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-item">
+    <div class="stat-num">100K+</div>
+    <div class="stat-label">Books analyzed</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">14</div>
+    <div class="stat-label">Taste dimensions</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">100%</div>
+    <div class="stat-label">Personalized to you</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">★ 4.9</div>
+    <div class="stat-label">App Store rating</div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works">
+  <div class="section-label">How it works</div>
+  <h2 class="section-title">Built around you,<br>not the algorithm.</h2>
+  <p class="section-sub">Most apps recommend what's popular. My Next Book recommends what's <em>yours</em>.</p>
+
+  <div class="steps">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-title">Tell us your mood</div>
+      <p class="step-desc">Pick how you want to feel — cozy, gripped, challenged, hopeful. We find books that match the experience you're after.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-title">Pick a few books you know</div>
+      <p class="step-desc">Just 3–5 titles you've read or loved. Our AI reads your choices across 14 taste dimensions — pace, tone, depth, and more.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div class="step-title">Get your first match instantly</div>
+      <p class="step-desc">Your first recommendation is waiting before you even finish setup. Every action after that makes the next one sharper.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <div class="step-title">It gets smarter every day</div>
+      <p class="step-desc">Rate a book, save one, skip one — every signal retrains your taste profile. The engine learns continuously, in real time.</p>
     </div>
   </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" style="padding-top: 0;">
+  <div class="section-label">Features</div>
+  <h2 class="section-title">Every feature learns you.</h2>
+  <p class="section-sub">Built on the same personalization principles as Spotify — but for books.</p>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">✦</div>
+      <div>
+        <div class="feature-title">Sharper recommendations</div>
+        <p class="feature-desc">Every book you rate or save makes your next match more accurate. The engine never stops learning.</p>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🌙</div>
+      <div>
+        <div class="feature-title">Mood Search</div>
+        <p class="feature-desc">Type how you want to feel — "something hopeful," "dark and twisty," "can't put it down." We find the book for that exact moment.</p>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🪞</div>
+      <div>
+        <div class="feature-title">Book Twin</div>
+        <p class="feature-desc">Your single highest-confidence match — the one book we'd stake our guarantee on for you right now.</p>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🧬</div>
+      <div>
+        <div class="feature-title">Reading DNA</div>
+        <p class="feature-desc">See your taste mapped across 14 dimensions. Finally understand <em>why</em> you love what you love.</p>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💎</div>
+      <div>
+        <div class="feature-title">Hidden Gems</div>
+        <p class="feature-desc">Under-the-radar titles ranked to your exact profile — not to what's trending or what the algorithm is paid to push.</p>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📻</div>
+      <div>
+        <div class="feature-title">Book Radio</div>
+        <p class="feature-desc">Pick a book you love. We queue up everything like it — endlessly. Never run out of what to read next.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GUARANTEE -->
+<section style="padding-top: 0;">
+  <div class="guarantee-block">
+    <div class="guarantee-icon">✦</div>
+    <h2>We guarantee your next read.</h2>
+    <p>
+      We're confident enough in our recommendations to back them with a full refund. If your first match isn't a book you love, contact us and we'll return every cent — no questions asked.
+    </p>
+    <a href="mailto:support@mynextbook.me?subject=Refund Request">Contact us to redeem →</a>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div style="text-align:center; margin-bottom: 3.5rem;">
+    <div class="section-label" style="display:inline-block;">Pricing</div>
+    <h2 class="section-title">Simple, honest pricing.</h2>
+    <p class="section-sub" style="margin: 0 auto;">Start free. Upgrade when you're ready.</p>
+  </div>
+
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-label">Monthly</div>
+      <div class="price-amount">$5.99<span>/mo</span></div>
+      <div class="price-sub">Billed monthly · Cancel anytime</div>
+      <ul class="price-features">
+        <li>Unlimited personalized recommendations</li>
+        <li>Mood Search</li>
+        <li>Book Twin</li>
+        <li>Reading DNA</li>
+        <li>Hidden Gems</li>
+        <li>Book Radio</li>
+      </ul>
+      <a href="https://apps.apple.com/app/id6763831526" class="price-cta secondary">Start free trial</a>
+    </div>
+
+    <div class="price-card featured">
+      <div class="price-badge">BEST VALUE</div>
+      <div class="price-label">Annual</div>
+      <div class="price-amount">$3.33<span>/mo</span></div>
+      <div class="price-sub">$39.99/year · Save 44%</div>
+      <ul class="price-features">
+        <li>Everything in Monthly</li>
+        <li>7-day free trial included</li>
+        <li>Priority recommendation updates</li>
+        <li>Shareable Reading DNA card</li>
+        <li>Early access to new features</li>
+      </ul>
+      <a href="https://apps.apple.com/app/id6763831526" class="price-cta">Start free trial</a>
+    </div>
+  </div>
+
+  <p class="pricing-note">7-day free trial · No charge until trial ends · Cancel anytime in Settings → Subscriptions</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">📖 My Next Book</div>
+  <div class="footer-links">
+    <a href="/privacy">Privacy Policy</a>
+    <a href="/terms">Terms of Use</a>
+    <a href="/support">Support</a>
+    <a href="mailto:support@mynextbook.me">Contact</a>
+  </div>
+  <p class="footer-copy">© 2026 My Next Book. Made with love for readers.</p>
+</footer>
+
 </body>
 </html>

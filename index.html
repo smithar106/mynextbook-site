@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Next Book — AI Book Discovery</title>
+  <meta name="description" content="Find books you're much more likely to love. Every swipe, save, and skip teaches My Next Book your taste — then it picks your next perfect read." />
+  <meta property="og:title" content="My Next Book" />
+  <meta property="og:description" content="AI-powered book discovery. Your feed learns your taste with every swipe." />
+  <meta property="og:image" content="https://mynextbook.me/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --purple: #B69CFF;
+      --purple-dark: #7B5FD4;
+      --bg: #0B0A12;
+      --bg2: #100B1D;
+      --surface: #171426;
+      --surface2: #1D1930;
+      --border: rgba(182,156,255,0.14);
+      --border-strong: rgba(182,156,255,0.30);
+      --gray-3: #AFA6C6;
+      --gray-4: #6F6880;
+      --gray-5: #4A4460;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: #F7F4FF;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 40px;
+      background: rgba(11,10,18,0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; color: #F7F4FF; text-decoration: none; }
+    .nav-cta {
+      background: var(--purple);
+      color: #120F1C;
+      padding: 10px 22px;
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+    .nav-cta:hover { opacity: 0.88; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; left: 50%; transform: translateX(-50%);
+      width: 900px; height: 900px;
+      background: radial-gradient(ellipse at center, rgba(182,156,255,0.13) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(182,156,255,0.12);
+      border: 1px solid rgba(182,156,255,0.32);
+      color: var(--purple);
+      font-size: 11px; font-weight: 800; letter-spacing: 1.5px;
+      padding: 6px 14px; border-radius: 100px;
+      margin-bottom: 28px;
+    }
+    .hero-badge::before { content: '✦'; font-size: 10px; }
+    h1 {
+      font-size: clamp(48px, 8vw, 88px);
+      font-weight: 900;
+      line-height: 1.0;
+      letter-spacing: -2px;
+      max-width: 820px;
+      margin-bottom: 24px;
+      color: #F7F4FF;
+    }
+    h1 span { color: var(--purple); }
+    .hero-sub {
+      font-size: clamp(16px, 2vw, 20px);
+      color: var(--gray-3);
+      max-width: 540px;
+      line-height: 1.6;
+      margin-bottom: 44px;
+    }
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--purple);
+      color: #120F1C;
+      font-size: 16px; font-weight: 800;
+      padding: 16px 32px; border-radius: 14px;
+      text-decoration: none;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(182,156,255,0.10);
+      border: 1px solid rgba(182,156,255,0.28);
+      color: #F7F4FF;
+      font-size: 16px; font-weight: 700;
+      padding: 16px 32px; border-radius: 14px;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .btn-secondary:hover { background: rgba(182,156,255,0.18); }
+    .hero-trust {
+      margin-top: 20px;
+      color: var(--gray-4);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    /* HOW IT WORKS */
+    section { padding: 100px 24px; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      text-align: center;
+      color: var(--purple);
+      font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    h2 {
+      text-align: center;
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+      color: #F7F4FF;
+    }
+    .section-sub {
+      text-align: center;
+      color: var(--gray-3);
+      font-size: 17px;
+      line-height: 1.6;
+      max-width: 520px;
+      margin: 0 auto 60px;
+    }
+
+    /* STEPS */
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    .step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      transition: border-color 0.2s;
+    }
+    .step:hover { border-color: var(--border-strong); }
+    .step-num {
+      width: 44px; height: 44px;
+      background: rgba(182,156,255,0.14);
+      border: 1px solid rgba(182,156,255,0.30);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 900; color: var(--purple);
+      margin-bottom: 18px;
+    }
+    .step h3 { font-size: 18px; font-weight: 800; margin-bottom: 8px; color: #F7F4FF; }
+    .step p { color: var(--gray-3); font-size: 14px; line-height: 1.6; }
+
+    /* FEATURES */
+    .features-bg { background: var(--bg2); }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .feature {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
+      transition: border-color 0.2s;
+    }
+    .feature:hover { border-color: var(--border-strong); }
+    .feature-icon {
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
+    .feature h4 { font-size: 15px; font-weight: 800; margin-bottom: 6px; color: #F7F4FF; }
+    .feature p { color: var(--gray-3); font-size: 13px; line-height: 1.5; }
+
+    /* SIGNALS */
+    .signals-wrap {
+      background: rgba(182,156,255,0.06);
+      border: 1px solid rgba(182,156,255,0.20);
+      border-radius: 24px;
+      padding: 40px;
+      text-align: center;
+    }
+    .signals-title { font-size: 22px; font-weight: 800; margin-bottom: 8px; color: #F7F4FF; }
+    .signals-sub { color: var(--gray-3); font-size: 14px; margin-bottom: 28px; }
+    .signals-pills { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+    .signal-pill {
+      background: rgba(182,156,255,0.12);
+      border: 1px solid rgba(182,156,255,0.30);
+      color: var(--purple);
+      font-size: 13px; font-weight: 700;
+      padding: 8px 16px; border-radius: 100px;
+    }
+
+    /* PRICING */
+    .plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; max-width: 660px; margin: 0 auto; }
+    .plan {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      position: relative;
+    }
+    .plan.featured {
+      background: rgba(182,156,255,0.07);
+      border-color: var(--purple);
+    }
+    .plan-badge {
+      display: inline-block;
+      background: var(--purple);
+      color: #120F1C;
+      font-size: 9px; font-weight: 800; letter-spacing: 1px;
+      padding: 4px 10px; border-radius: 4px;
+      margin-bottom: 16px;
+    }
+    .plan-name { font-size: 16px; font-weight: 800; color: var(--gray-3); margin-bottom: 8px; }
+    .plan-price { font-size: 42px; font-weight: 900; letter-spacing: -2px; color: #F7F4FF; }
+    .plan-price span { font-size: 16px; font-weight: 600; color: var(--gray-4); letter-spacing: 0; }
+    .plan-period { color: var(--gray-4); font-size: 13px; margin-top: 4px; margin-bottom: 20px; }
+    .plan-cta {
+      display: block; text-align: center;
+      font-size: 15px; font-weight: 800;
+      padding: 14px; border-radius: 12px;
+      text-decoration: none;
+      margin-bottom: 20px;
+      transition: opacity 0.15s;
+    }
+    .plan.featured .plan-cta { background: var(--purple); color: #120F1C; }
+    .plan:not(.featured) .plan-cta { background: rgba(182,156,255,0.14); color: #F7F4FF; border: 1px solid rgba(182,156,255,0.28); }
+    .plan-cta:hover { opacity: 0.88; }
+    .plan-perks { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .plan-perks li { color: var(--gray-3); font-size: 13px; display: flex; align-items: center; gap: 8px; }
+    .plan-perks li::before { content: '✓'; color: var(--purple); font-weight: 800; }
+    .pricing-trust { text-align: center; color: var(--gray-4); font-size: 13px; margin-top: 24px; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 48px 24px;
+    }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 20px;
+    }
+    .footer-logo { font-size: 16px; font-weight: 900; letter-spacing: -0.4px; color: #F7F4FF; }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { color: var(--gray-4); font-size: 13px; text-decoration: none; transition: color 0.15s; }
+    .footer-links a:hover { color: #F7F4FF; }
+    .footer-copy { color: var(--gray-4); font-size: 13px; }
+
+    @media (max-width: 600px) {
+      nav { padding: 16px 20px; }
+      h1 { letter-spacing: -1px; }
+      .hero-ctas { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-secondary { width: 100%; max-width: 320px; justify-content: center; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo">My Next Book</a>
+    <a href="https://apps.apple.com/app/apple-store/id6743767654" class="nav-cta">Download Free</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">AI BOOK DISCOVERY</div>
+    <h1>Your feed learns<br/><span>your taste.</span></h1>
+    <p class="hero-sub">Swipe through thousands of books. Every save, skip, and rating trains your personal AI — so the next pick is always more you.</p>
+    <div class="hero-ctas">
+      <a href="https://apps.apple.com/app/apple-store/id6743767654" class="btn-primary">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        Download on iOS
+      </a>
+      <a href="#how-it-works" class="btn-secondary">See how it works →</a>
+    </div>
+    <p class="hero-trust">Free to start · 7-day Pro trial included</p>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how-it-works">
+    <div class="section-inner">
+      <p class="section-label">How it works</p>
+      <h2>Books that learn<br/>from every swipe</h2>
+      <p class="section-sub">No quizzes. No manual filters. Just swipe — and watch your feed become more you every session.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h3>Swipe the feed</h3>
+          <p>Save, dismiss, or skip any book. Every tap updates your taste profile across 14 dimensions — instantly.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h3>Your profile builds</h3>
+          <p>Pace, tone, emotional intensity, worldbuilding, prose style — your AI tracks all of it simultaneously and silently.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h3>Feed sharpens fast</h3>
+          <p>After just 3 signals, Precision Mode activates. Your matches are now filtered through your actual reading DNA.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <h3>Search by mood</h3>
+          <p>"Need a cry", "Can't put it down", "Make me think" — one tap shifts your entire feed to match how you feel right now.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features-bg">
+    <div class="section-inner">
+      <p class="section-label">Features</p>
+      <h2>Built different</h2>
+      <p class="section-sub">The features that make My Next Book the most personal reading feed you've ever used.</p>
+      <div class="features-grid">
+        <div class="feature">
+          <div class="feature-icon">✦</div>
+          <h4>AI Book Feed</h4>
+          <p>250,000+ books ranked in real time by your personal taste profile — not the bestseller list.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">◈</div>
+          <h4>Reading DNA</h4>
+          <p>A live taste map — your pace preference, emotional range, and genre DNA, built from your choices.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🌙</div>
+          <h4>Mood Search</h4>
+          <p>Describe how you want to feel and we'll find the books that match — cozy weekend, dark & twisty, feel-good, and more.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">📚</div>
+          <h4>Book Twin</h4>
+          <p>Your single highest-confidence match — one book we're most certain you'll love, recalculated as you rate.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🎯</div>
+          <h4>Precision Matching</h4>
+          <p>Every interaction updates 14 taste dimensions at once — so accuracy compounds fast and the feed keeps improving.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">📻</div>
+          <h4>Book Radio</h4>
+          <p>Start from any book and let the AI queue up a station of reads in the same vibe — personalized to your taste, not just genre.</p>
+        </div>
+      </div>
+
+      <div class="signals-wrap" style="margin-top: 40px;">
+        <p class="signals-title">14 taste dimensions tracked</p>
+        <p class="signals-sub">Your AI tracks all of these — simultaneously, silently, automatically.</p>
+        <div class="signals-pills">
+          <span class="signal-pill">Pace</span>
+          <span class="signal-pill">Tone</span>
+          <span class="signal-pill">Emotional Intensity</span>
+          <span class="signal-pill">Intellectual Depth</span>
+          <span class="signal-pill">Plot vs Character</span>
+          <span class="signal-pill">Prose Style</span>
+          <span class="signal-pill">Worldbuilding</span>
+          <span class="signal-pill">Realism</span>
+          <span class="signal-pill">Optimism</span>
+          <span class="signal-pill">Weirdness</span>
+          <span class="signal-pill">Romance</span>
+          <span class="signal-pill">Tension</span>
+          <span class="signal-pill">Humor</span>
+          <span class="signal-pill">Accessibility</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section>
+    <div class="section-inner">
+      <p class="section-label">Pricing</p>
+      <h2>Start free.<br/>Upgrade when ready.</h2>
+      <p class="section-sub">The full feed is free. Go Pro to unlock Book Twin, Mood Search, Book Radio, and higher-precision matches.</p>
+      <div class="plans">
+        <div class="plan featured">
+          <div class="plan-badge">BEST VALUE</div>
+          <p class="plan-name">Annual</p>
+          <p class="plan-price">$2.50<span>/mo</span></p>
+          <p class="plan-period">Billed $30/year</p>
+          <a href="https://apps.apple.com/app/apple-store/id6743767654" class="plan-cta">Start Free Trial →</a>
+          <ul class="plan-perks">
+            <li>Book Twin — your highest-confidence match</li>
+            <li>Mood Search — search by how you feel</li>
+            <li>Book Radio — mood-matched queues</li>
+            <li>Advanced filters & For You grid</li>
+            <li>7-day free trial included</li>
+          </ul>
+        </div>
+        <div class="plan">
+          <p class="plan-name">Monthly</p>
+          <p class="plan-price">$5<span>/mo</span></p>
+          <p class="plan-period">Cancel anytime</p>
+          <a href="https://apps.apple.com/app/apple-store/id6743767654" class="plan-cta">Start Free Trial →</a>
+          <ul class="plan-perks">
+            <li>Book Twin — your highest-confidence match</li>
+            <li>Mood Search — search by how you feel</li>
+            <li>Book Radio — mood-matched queues</li>
+            <li>Advanced filters & For You grid</li>
+            <li>7-day free trial included</li>
+          </ul>
+        </div>
+      </div>
+      <p class="pricing-trust">No charge during free trial · Cancel anytime in Settings · Restore purchases in-app</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-logo">My Next Book</span>
+      <div class="footer-links">
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/support">Support</a>
+        <a href="mailto:support@mynextbook.me">Contact</a>
+      </div>
+      <span class="footer-copy">© 2026 My Next Book. All rights reserved.</span>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -45,7 +45,7 @@
 
   <main>
     <h1>Privacy Policy</h1>
-    <p class="effective">Effective date: May 2, 2026 · Last updated: May 2, 2026</p>
+    <p class="effective">Effective date: May 2, 2026 · Last updated: June 12, 2026</p>
 
     <p>My Next Book ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use the My Next Book mobile application (the "App").</p>
 
@@ -53,35 +53,49 @@
     <p>We collect information in the following ways:</p>
     <ul>
       <li><strong>Anonymous usage data:</strong> When you first open the App, an anonymous session is created. No name, email address, or personal identifier is required to use the basic features of the App.</li>
-      <li><strong>Style interaction data:</strong> We collect your in-app interactions — swipes (like, skip, save), item views, dwell time, and mood selections. This data is used exclusively to power your personal style recommendations.</li>
+      <li><strong>Reading interaction data:</strong> We collect your in-app interactions — likes, skips, saves, ratings, book views, mood selections, and playlist acceptances/rejections. This data is used exclusively to power your personalised reading recommendations and taste profile.</li>
       <li><strong>Device information:</strong> We may collect basic device identifiers, operating system version, and app version for diagnostic and support purposes.</li>
-      <li><strong>Purchase information:</strong> If you subscribe to My Next Book Pro, purchase transactions are processed by Apple's App Store. We receive confirmation of your subscription status but do not receive your payment card details.</li>
+      <li><strong>Crash and performance data:</strong> We use Sentry to collect crash reports and performance metrics to diagnose and fix technical issues.</li>
+      <li><strong>Analytics data:</strong> We use PostHog to understand how features are used — which screens you visit, which actions you take, and how you navigate the App. This helps us improve the experience.</li>
+      <li><strong>Location data:</strong> The App requests your location only when you explicitly tap "Find independent bookstores" on a book's detail page. Location data is used solely to show nearby bookstores and is never stored, shared, or used for any other purpose.</li>
+      <li><strong>Notification data:</strong> If you opt in to push notifications, we store a device token to deliver notifications about your reading taste, playlist progress, and weekly recaps. You can disable notifications at any time in your device Settings.</li>
+      <li><strong>Purchase information:</strong> If you subscribe to My Next Book Pro, purchase transactions are processed by Apple's App Store and managed through RevenueCat. We receive confirmation of your subscription status but do not receive your payment card details.</li>
+      <li><strong>AI processing:</strong> When the App generates personalised reading insights (e.g. after rating a book), the book title, author, genre, your rating, and taste signals are sent to Anthropic's Claude API for natural language generation. No personal identifiers are included in these requests.</li>
     </ul>
 
     <h2>2. How We Use Your Information</h2>
     <p>We use the information we collect to:</p>
     <ul>
-      <li>Power and improve your personalised fashion feed</li>
-      <li>Build and update your Style DNA profile in real time</li>
+      <li>Power and improve your personalised reading recommendations</li>
+      <li>Build and update your Reading Identity / Taste Profile in real time</li>
       <li>Improve the accuracy of our recommendation engine over time</li>
+      <li>Generate personalised reading insights</li>
       <li>Diagnose technical issues and improve app performance</li>
+      <li>Understand feature usage to guide product improvements</li>
+      <li>Show nearby bookstores when you request them</li>
       <li>Verify your subscription status and provide Pro features</li>
+      <li>Send taste-related notifications (only if opted in)</li>
     </ul>
-    <p>We do not sell your data. We do not use your style data for advertising purposes beyond the My Next Book App itself.</p>
+    <p>We do not sell your data. We do not use your reading data for advertising purposes.</p>
 
     <h2>3. Data Storage and Security</h2>
-    <p>Your interaction data and style profile are stored securely using Supabase, a cloud database platform. Data is encrypted in transit (TLS) and at rest. Anonymous user sessions are tied to a device-level identifier, not a personal account.</p>
+    <p>Your interaction data and taste profile are stored securely using Supabase, a cloud database platform. Data is encrypted in transit (TLS) and at rest. Anonymous user sessions are tied to a device-level identifier, not a personal account. When you create an account, your data is associated with your account and can be deleted on request or via the in-app Delete Account option.</p>
 
     <h2>4. Third-Party Services</h2>
     <p>The App uses the following third-party services:</p>
     <ul>
-      <li><strong>Supabase</strong> — database and authentication infrastructure (<a href="https://supabase.com/privacy" target="_blank">supabase.com/privacy</a>)</li>
+      <li><strong>Supabase</strong> — database, authentication, and API infrastructure (<a href="https://supabase.com/privacy" target="_blank">supabase.com/privacy</a>)</li>
       <li><strong>Apple App Store</strong> — subscription and payment processing (<a href="https://www.apple.com/legal/privacy" target="_blank">apple.com/legal/privacy</a>)</li>
-      <li><strong>ASOS / RapidAPI</strong> — product catalog data (product images and details only; no user data is shared)</li>
+      <li><strong>RevenueCat</strong> — subscription management and purchase restoration (<a href="https://www.revenuecat.com/privacy" target="_blank">revenuecat.com/privacy</a>)</li>
+      <li><strong>PostHog</strong> — product analytics (<a href="https://posthog.com/privacy" target="_blank">posthog.com/privacy</a>)</li>
+      <li><strong>Sentry</strong> — crash and error reporting (<a href="https://sentry.io/privacy" target="_blank">sentry.io/privacy</a>)</li>
+      <li><strong>Anthropic</strong> — AI-generated reading insights (Claude API) (<a href="https://www.anthropic.com/privacy" target="_blank">anthropic.com/privacy</a>)</li>
+      <li><strong>Google Books API</strong> — book search and cover images (<a href="https://policies.google.com/privacy" target="_blank">policies.google.com/privacy</a>)</li>
+      <li><strong>Open Library</strong> — book cover images (<a href="https://openlibrary.org/privacy" target="_blank">openlibrary.org/privacy</a>)</li>
     </ul>
 
     <h2>5. Data Retention</h2>
-    <p>Your style interaction data and preferences are retained as long as your anonymous session is active. If you uninstall the App, your anonymous session data may be retained on our servers for up to 12 months before deletion. You can request deletion of your data at any time by contacting us at <a href="mailto:support@mynextbook.me">support@mynextbook.me</a>.</p>
+    <p>Your reading interaction data and preferences are retained as long as your session or account is active. If you uninstall the App without an account, your anonymous session data may be retained on our servers for up to 12 months before deletion. You can request deletion of your data at any time by contacting us at <a href="mailto:support@mynextbook.me">support@mynextbook.me</a>, or use the in-app Delete Account option (Settings tab).</p>
 
     <h2>6. Children's Privacy</h2>
     <p>The App is not directed to children under the age of 13. We do not knowingly collect personal information from children under 13. If we learn we have collected information from a child under 13, we will delete it promptly.</p>
@@ -92,6 +106,7 @@
       <li>Access the data we hold about you</li>
       <li>Request correction or deletion of your data</li>
       <li>Opt out of certain data processing activities</li>
+      <li>Delete your account and all associated data directly in-app</li>
     </ul>
     <p>To exercise any of these rights, contact us at <a href="mailto:support@mynextbook.me">support@mynextbook.me</a>.</p>
 
